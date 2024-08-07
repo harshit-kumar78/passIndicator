@@ -9,8 +9,15 @@
 </head>
 
 <body>
+  <div id="preLoader"></div>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <script>
+    let preLoaderDiv = document.getElementById("preLoader");
+    window.addEventListener("load", () => {
+      preLoaderDiv.style.display = "none";
+    })
+  </script>
 </body>
 
 </html>
