@@ -1,0 +1,56 @@
+.indicator {
+    height          : 100vh;
+    width           : 100%;
+    background-color: bisque;
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    flex-direction  : column;
+}
+
+.input-box {
+    width    : 400px;
+    max-width: 90%;
+    position : relative;
+
+}
+
+.input-box>input {
+    padding: 4%;
+    width  : 100%;
+    outline: none;
+}
+
+.input-box>input ::placeholder {
+    font-size: 15px;
+}
+
+.input-box>button {
+    position  : absolute;
+    top       : 0%;
+    right     : -9%;
+    height    : 100%;
+    width     : 20%;
+    border    : none;
+    background: red;
+    cursor    : pointer;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.yellow {
+    color: yellow;
+}
+
+/* media queries */
+@media (max-width:550px) {
+    .input-box {
+        width: 299px;
+    }
+}

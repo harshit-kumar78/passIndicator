@@ -1,10 +1,12 @@
-
+import Indicator from './Indicator/Indicator'
 import './App.css'
 function App() {
 
   return (
     <>
-      <div className="app">Hello from App</div>
+      <div className="app">
+        <Indicator />
+      </div>
     </>
   )
 }
