@@ -1,7 +1,8 @@
+
 import Indicator from './Indicator/Indicator'
 import './App.css'
-function App() {
 
+function App() {
   return (
     <>
       <div className="app">
