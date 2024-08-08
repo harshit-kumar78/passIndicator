@@ -1,9 +1,14 @@
-import React, { useEffect, useRef } from 'react'
-import "./Indicator.css"
+import React, { useEffect, useRef, useState } from 'react'
+import "./Indicator.css";
+import { LuEye } from "react-icons/lu";
+import { LuEyeOff } from "react-icons/lu";
 const Indicator = () => {
     const passwordRef = useRef(null);
     const pRef = useRef(null);
     const spanRef = useRef(null);
+    const indicatorRef = useRef(null);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showToggle, setShowToggle] = useState(false);
 
     const calculateStrength = (password) => {
         let strength = '';
@@ -30,24 +35,38 @@ const Indicator = () => {
             if (!passwordValue) {
                 pRef.current.style.display = "none";
                 passwordRef.current.style.border = "none";
-
+                indicatorRef.current.childNodes[0].classList.remove("bgred");
+                indicatorRef.current.childNodes[1].classList.remove("bgyellow");
+                indicatorRef.current.childNodes[2].classList.remove("bggreen");
+                setShowToggle(false);
             } else {
-
+                setShowToggle(true);
                 if (strength === "weak") {
                     passwordRef.current.style.border = "2px solid red";
                     spanRef.current.classList.remove('green');
                     spanRef.current.classList.remove('yellow');
                     spanRef.current.classList.add('red');
+
+                    indicatorRef.current.childNodes[1].classList.remove("bgyellow");
+                    indicatorRef.current.childNodes[2].classList.remove("bggreen");
+                    indicatorRef.current.childNodes[0].classList.add("bgred");
                 } else if (strength === "medium") {
                     passwordRef.current.style.border = "2px solid yellow";
                     spanRef.current.classList.remove('red');
                     spanRef.current.classList.remove('green');
                     spanRef.current.classList.add('yellow');
+
+                    indicatorRef.current.childNodes[2].classList.remove("bggreen");
+                    indicatorRef.current.childNodes[1].classList.add("bgyellow");
+                    indicatorRef.current.childNodes[0].classList.add("bgred");
                 } else if (strength === "strong") {
                     passwordRef.current.style.border = "2px solid green";
                     spanRef.current.classList.remove('red');
                     spanRef.current.classList.remove('yellow');
                     spanRef.current.classList.add('green');
+                    indicatorRef.current.childNodes[0].classList.add("bgred");
+                    indicatorRef.current.childNodes[1].classList.add("bgyellow");
+                    indicatorRef.current.childNodes[2].classList.add("bggreen");
                 }
                 pRef.current.style.display = "block"
             }
@@ -58,7 +77,6 @@ const Indicator = () => {
         handleInput();
 
         return () => {
-            alert('called');
             passwordInput.removeEventListener('input', handleInput);
         };
     }, [])
@@ -66,10 +84,23 @@ const Indicator = () => {
     return (
         <div className='indicator'>
             <div className="input-box">
-                <input type="text" name="password" placeholder='Password' ref={passwordRef} />
+                <input type={showPassword ? "text" : "password"} name="password" placeholder='Password' ref={passwordRef} />
                 <button>Save</button>
-
             </div>
+            <div className='indicator-bars' ref={indicatorRef}>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            {showToggle && (
+                <div className="toggle-button">
+                    {showPassword ? (
+                        <LuEyeOff size="30px" onClick={() => setShowPassword(!showPassword)} />
+                    ) : (
+                        <LuEye size="30px" onClick={() => setShowPassword(!showPassword)} />
+                    )}
+                </div>
+            )}
             <p ref={pRef}>Password is <span ref={spanRef}></span></p>
         </div>
 
