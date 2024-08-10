@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import "./Indicator.css";
 import { LuEye } from "react-icons/lu";
 import { LuEyeOff } from "react-icons/lu";
+import { useOktaAuth } from '@okta/okta-react';
+
 const Indicator = () => {
     const passwordRef = useRef(null);
     const pRef = useRef(null);
@@ -9,6 +11,7 @@ const Indicator = () => {
     const indicatorRef = useRef(null);
     const [showPassword, setShowPassword] = useState(false);
     const [showToggle, setShowToggle] = useState(false);
+    const { authState, oktaAuth } = useOktaAuth();
 
     const calculateStrength = (password) => {
         let strength = '';
@@ -25,13 +28,15 @@ const Indicator = () => {
 
         return strength;
     };
+    const handleLogout = () => {
+        oktaAuth.signOut();
+    }
+
     useEffect(() => {
-        const handleInput = () => {
+        const handleInput = async () => {
             const passwordValue = passwordRef.current.value;
             const strength = calculateStrength(passwordValue);
-
             spanRef.current.innerText = strength;
-
             if (!passwordValue) {
                 pRef.current.style.display = "none";
                 passwordRef.current.style.border = "none";
@@ -80,6 +85,12 @@ const Indicator = () => {
             passwordInput.removeEventListener('input', handleInput);
         };
     }, [])
+
+    useEffect(() => {
+        if (authState && !authState.isAuthenticated) {
+            oktaAuth.signInWithRedirect();
+        }
+    }, [[authState, oktaAuth]])
 
     return (
         <div className='indicator'>

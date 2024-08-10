@@ -1,0 +1,14 @@
+.navbar {
+    min-height     : 8vh;
+    background     : red;
+    color          : black;
+    font-size      : large;
+    padding        : 12px;
+    font-size      : 4rem;
+    display        : flex;
+    justify-content: space-between;
+}
+
+.cursor {
+    cursor: pointer;
+}
