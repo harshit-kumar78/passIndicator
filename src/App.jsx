@@ -1,6 +1,6 @@
 
 import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Indicator from './Indicator/Indicator';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { Security, } from "@okta/okta-react";
@@ -18,22 +18,24 @@ const oktaAuth = new OktaAuth({
   logLevel: import.meta.env.VITE_LOG_LEVEL,
 })
 
-const restoreOriginalUri = async (_oktaAuth, originalUri) => {
-  navigate(originalUri || "/", { replace: true });
-};
 
 function App() {
+  const navigate = useNavigate();
+
+  const restoreOriginalUri = async (_oktaAuth, originalUri) => {
+    navigate(originalUri || "/", { replace: true });
+  };
   return (
-    <BrowserRouter>
-      <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/protected' element={<Indicator />} />
-          <Route path="/login/callback" element={<LoginCallback />} />
-        </Routes>
-      </Security>
-    </BrowserRouter>
+
+    <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/protected' element={<Indicator />} />
+        <Route path="/login/callback" element={<LoginCallback />} />
+      </Routes>
+    </Security>
+
   )
 }
 
