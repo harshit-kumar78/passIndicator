@@ -3,8 +3,8 @@ import './App.css'
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Indicator from './Indicator/Indicator';
 import { OktaAuth } from '@okta/okta-auth-js';
-import { Security, } from "@okta/okta-react";
-import LoginCallback from '../src/LoginCallback';
+import { Security, LoginCallback } from "@okta/okta-react";
+// import LoginCallback from '../src/LoginCallback';
 import Home from './Home/Home';
 import Navbar from './Navbar/Navbar';
 
